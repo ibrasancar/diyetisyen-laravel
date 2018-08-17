@@ -149,7 +149,9 @@ return [
         'tc_no'         =>  'Kimlik No',
         'cep_telefon'   =>  'Cep telefonu',
         'kullanici_adi' =>  'Kullanıcı adı',
-        'dogum_tarihi'  =>  'Doğum tarihi'
+        'dogum_tarihi'  =>  'Doğum tarihi',
+        'yorum'         =>  'Yorum',
+        'puan'          =>  'Puan'
     ],
 
 ];

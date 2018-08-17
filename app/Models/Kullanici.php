@@ -57,4 +57,9 @@ class Kullanici extends Authenticatable
         return $this->hasMany('App\Models\Mesaj', 'alici_id', 'id');
     }
 
+    public function alinan_yorum()
+    {
+        return $this->hasMany('App\Models\Yorum', 'diyetisyen_id', 'id')->with('kullanici');
+    }
+
 }

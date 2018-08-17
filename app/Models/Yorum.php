@@ -12,4 +12,16 @@ class Yorum extends Model
 
     const CREATED_AT = 'gonderme_tarihi';
     const DELETED_AT = 'silinme_tarihi';
+    const UPDATED_AT = null;
+
+    protected $guarded = [];
+
+    protected $fillable = [
+        'kullanici_id', 'diyetisyen_id', 'puan', 'yorum'
+    ];
+
+    public function kullanici()
+    {
+        return $this->belongsTo('App\Models\Kullanici', 'kullanici_id', 'id');
+    }
 }

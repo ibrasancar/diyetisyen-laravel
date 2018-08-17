@@ -61,6 +61,8 @@ Route::group(['middleware' => 'auth'], function (){
     Route::group(['prefix' => 'diyetisyen'], function () {
         Route::match(['get', 'post'], '/', 'DiyetisyenController@index')->name('diyetisyen');
         Route::get('/{kullanici_adi}', 'DiyetisyenController@incele')->name('diyetisyen.incele');
+        Route::get('/{kullanici_adi}/yorum', 'YorumController@yorum_sayfa')->name('diyetisyen.yorum_sayfa');
+        Route::post('/{kullanici_adi}/yorum', 'YorumController@yorum_yap');
     });
 
 });

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Diyetisyen;
 use App\Models\DiyetisyenTip;
 use App\Models\Kullanici;
+use App\Models\Yorum;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DiyetisyenController extends Controller
@@ -52,10 +54,17 @@ class DiyetisyenController extends Controller
 
     public function incele($kullanici_adi)
     {
+        Carbon::setLocale('tr');
         $kullanici = Kullanici::with('diyetisyen')
             ->with('sosyal_medya')
             ->with('resim')
             ->where('kullanici_adi', $kullanici_adi)->firstOrFail();
-        return view('diyetisyen.incele', compact('kullanici'));
+
+        $alinan_yorumlar = Yorum::where('diyetisyen_id', $kullanici->id)
+            ->orderByDesc('gonderme_tarihi')
+            ->paginate(6);
+
+        $kullanici_yorumu = Yorum::where('kullanici_id', auth()->user()->id)->firstOrFail();
+        return view('diyetisyen.incele', compact('kullanici', 'alinan_yorumlar', 'kullanici_yorumu'));
     }
 }
