@@ -3,15 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kullanici;
+use App\Models\Mesaj;
 use App\Models\Yorum;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 class YorumController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        Carbon::setLocale('tr');
+
+        $this->middleware(function ($request, $next) {
+            $ku_id = Auth::user()->id;
+            $okunmamis_mesaj_sayisi = Mesaj::where('mesaj.alici_id', $ku_id)->where('mesaj.okunma_tarihi', null)->count();
+            View::share('okunmamis_mesaj_sayisi', $okunmamis_mesaj_sayisi);
+
+            return $next($request);
+        });
+    }
+
     public function yorum_sayfa($kullanici_adi)
     {
-        $kullanici = Kullanici::where('kullanici_adi', $kullanici_adi)->first();
-        return view('diyetisyen.yorum_yap', compact('kullanici'));
+        $kullanici = Kullanici::where('kullanici_adi', $kullanici_adi)->firstOrFail();
+        return view('diyetisyen.incele.yorum_yap', compact('kullanici'));
     }
 
     public function yorum_yap($kullanici_adi){
@@ -25,7 +44,7 @@ class YorumController extends Controller
         }
 
         #daha önce yorum yapılmış mı?
-        $yorum_kontrol = Yorum::where('kullanici_id', $yorum_yapan->id)->count();
+        $yorum_kontrol = Yorum::where('kullanici_id', $yorum_yapan->id)->where('diyetisyen_id', $kullanici->id)->count();
 
         if ($yorum_kontrol > 0){
             return redirect()->route('diyetisyen.incele', $kullanici_adi)

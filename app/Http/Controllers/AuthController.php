@@ -15,7 +15,7 @@ class AuthController extends Controller
 
     public function giris()
     {
-        return view('kullanici.giris');
+        return view('auth.giris');
     }
 
     public function giris_islem()
@@ -43,7 +43,7 @@ class AuthController extends Controller
 
     public function kayit()
     {
-        return view('kullanici.kayit');
+        return view('auth.kayit');
     }
 
     public function kayit_islem()

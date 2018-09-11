@@ -1,31 +1,17 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <title>@yield('title')</title>
     @include('layouts.partials.head')
-    @yield('style')
+    @yield('styles')
 </head>
-<body>
+<body data-spy="scroll" data-target="#pb-navbar" data-offset="200">
 
-<div class="super_container">
-
-    <!-- Header -->
-
-    @include('layouts.partials.header')
-
-    <!-- Menu -->
-
+    @include('layouts.partials.main_menu')
 
     @yield('content')
 
-    <!-- Footer -->
-
     @include('layouts.partials.footer')
 
-</div>
-
-@include('layouts.partials.scripts')
-
-@stack('scripts')
 </body>
 </html>

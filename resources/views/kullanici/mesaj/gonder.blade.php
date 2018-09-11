@@ -2,26 +2,16 @@
 @section('title', 'Gelen Mesaj - Diyetisyen Portalı')
 
 @section('content')
-    <!-- Home -->
-    <div class="home">
-        <div class="home_background_container prlx_parent">
-            <div class="home_background prlx" style="background-image:url(/images/teachers_background.jpg)"></div>
-        </div>
-        <div class="home_content">
-            <h1>Mesaj Gönder</h1>
-        </div>
-    </div>
-    <div class="teachers page_section">
-        <div class="container">
+        <div class="container mt-5">
             @include('layouts.partials.alert')
             @include('layouts.partials.errors')
             <div class="row">
-                @include('kullanici.hesap_ayarlari')
-                <div class="col-lg-8">
-                    <div class="card">
+                @include('kullanici.sol_panel')
+                <div class="col-lg-8 mb-5">
+                    <div class="card border-primary">
                         <div class="card-body p-0">
                             <div class="card-header">
-                                <h2 style="color: #3f3f3f">Başlık: </h2>
+                                <h2 style="color: #3f3f3f">Mesaj {{ isset($onceki_mesaj) ? 'Cevapla' :  'Gönder' }}</h2>
                             </div>
                         </div>
                         <div class="card-text p-3 pt-4">
@@ -47,9 +37,21 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <label for="mesaj"></label>
-                                                <textarea name="mesaj" id="mesaj" cols="30" rows="10" class="form-control">
-                                                        {{ isset($onceki_mesaj) ? '<blockquote>' . $onceki_mesaj->mesaj . '</blockquote>' : '' }}
-                                                        <p>
+                                                @if(isset($onceki_mesaj))
+                                                    <div class="row mt-2 mb-4">
+                                                        <div class="col-md-12">
+                                                            <div class="card border-primary overflow-hidden">
+                                                                <div class="card-body">
+                                                                    <i class="fas fa-quote-right list_icon"></i>
+                                                                    <h4 class="card-title">{{ $onceki_mesaj->baslik }}</h4>
+                                                                    <p class="card-text">{!! $onceki_mesaj->mesaj !!}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                                <textarea name="mesaj" id="mesaj" cols="30" rows="20" class="form-control">
+
                                                 </textarea>
                                             </div>
                                         </div>
@@ -76,19 +78,37 @@
 
             </div>
         </div>
-    </div>
 @endsection
 
 @push('scripts')
-    <script src="/plugins/easing/easing.js"></script>
-    <script src="/js/teachers_custom.js"></script>
-    <script src="//cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
-    <script type="text/javascript">
-        CKEDITOR.replace("mesaj");
+
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+
+    <script>
+        var quill = new Quill('#mesaj', {
+            theme: 'snow'
+        });
     </script>
+
+
+    {{--<script src="//cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>--}}
+    {{--<script type="text/javascript">--}}
+        {{--CKEDITOR.replace("mesaj");--}}
+    {{--</script>--}}
 @endpush
 
-@section('style')
-    <link rel="stylesheet" type="text/css" href="/styles/teachers_styles.css">
-    <link rel="stylesheet" type="text/css" href="/styles/teachers_responsive.css">
+@section('styles')
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <style>
+        .list_icon{
+            position: absolute;
+            right: -5px;
+            top: -5px;
+            font-size: 72px;
+            transform: rotate(-20deg);
+            opacity: 0.4;
+        }
+    </style>
 @endsection

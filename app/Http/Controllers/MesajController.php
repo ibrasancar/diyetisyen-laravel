@@ -5,11 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\Dosya;
 use App\Models\Kullanici;
 use App\Models\Mesaj;
+use Carbon\Carbon;
 use phpDocumentor\Reflection\DocBlock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 class MesajController extends Controller
 {
+
+    public function __construct()
+    {
+        Carbon::setLocale('tr');
+
+        $this->middleware('auth');
+
+        $this->middleware(function ($request, $next) {
+            $ku_id = Auth::user()->id;
+            $okunmamis_mesaj_sayisi = Mesaj::where('mesaj.alici_id', $ku_id)->where('mesaj.okunma_tarihi', null)->count();
+            View::share('okunmamis_mesaj_sayisi', $okunmamis_mesaj_sayisi);
+
+            return $next($request);
+        });
+    }
 
     public function alinan_mesajlar()
     {
@@ -21,6 +39,7 @@ class MesajController extends Controller
         $mesajlar = Mesaj::where('alici_id', $kullanici_id)
             ->orderByDesc('gonderme_tarihi')
             ->paginate(6);
+
 
         return view('kullanici.mesaj.mesaj', compact('kullanici', 'mesajlar'))
             ->with('mesaj_tur', 'mesaj.gonderilenler')
@@ -55,7 +74,15 @@ class MesajController extends Controller
                 return $query->where('alici_id', $kullanici_id)->orWhere('gonderici_id', $kullanici_id);
             })
             ->with('gonderici_bilgileri')
+            ->with('dosya')
             ->firstOrFail();
+
+        if ($mesaj->okunma_tarihi == null && $mesaj->alici_id == $kullanici_id)
+        {
+            $okunma_tarihi = Carbon::now();
+            $mesaj->okunma_tarihi = $okunma_tarihi->toDateTimeString();
+            $mesaj->save();
+        }
 
         return view('kullanici.mesaj.incele', compact('kullanici', 'mesaj'));;
 

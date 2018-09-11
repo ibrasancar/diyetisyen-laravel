@@ -2,17 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Diyetisyen;
+use App\Models\DiyetisyenTip;
 use App\Models\Dosya;
 use App\Models\Kullanici;
+use App\Models\Mesaj;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\View;
 
 class KullaniciController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->middleware(function ($request, $next) {
+            $ku_id = Auth::user()->id;
+            $okunmamis_mesaj_sayisi = Mesaj::where('mesaj.alici_id', $ku_id)->where('mesaj.okunma_tarihi', null)->count();
+            View::share('okunmamis_mesaj_sayisi', $okunmamis_mesaj_sayisi);
+
+            return $next($request);
+        });
     }
 
     public function panel()
@@ -21,7 +34,7 @@ class KullaniciController extends Controller
         $kullanici = Kullanici::with('resim')
             ->with('sosyal_medya')
             ->find($kullanici_id);
-        return view('kullanici.panel', compact('kullanici'));
+        return view('kullanici.ayarlar', compact('kullanici'));
     }
 
     public function guncelle()
@@ -107,5 +120,46 @@ class KullaniciController extends Controller
             ->with('mesaj_tur', 'success');
     }
 
+    public function diyetisyen_panel()
+    {
+
+        $kullanici_id = auth()->user()->id;
+        $kullanici = Kullanici::with('diyetisyen')
+            ->where('id', $kullanici_id)
+            ->firstOrFail();
+        if ($kullanici->seviye == 1){
+            $diyetisyen_tipleri = DiyetisyenTip::all();
+            return view('kullanici.diyetisyen_ayarlar', compact('kullanici', 'diyetisyen_tipleri'));
+        }
+        return redirect()->route('kullanici.panel')
+            ->with('mesaj', 'Diyetisyen değilsin ki?')
+            ->with('mesaj_tur', 'danger');
+    }
+
+    public function diyetisyen_guncelle()
+    {
+        $this->validate(\request(), [
+            'tip'  =>  'required|integer',
+            'aciklama' =>  'required|min:120|max:255',
+            'ozgecmis' =>  'required|min:255|max:999999'
+        ]);
+
+        $data = \request()->only('tip', 'aciklama', 'ozgecmis');
+        $kullanici_id = \auth()->user()->id;
+
+        $kullanici = Kullanici::with('diyetisyen')->where('id', $kullanici_id)->firstOrFail();
+
+        if ($kullanici->seviye == 1){
+            $kullanici->diyetisyen()->update($data);
+            $diyetisyen_tipleri = DiyetisyenTip::all();
+            return redirect()->route('kullanici.diyetisyen_panel')
+                ->with('mesaj', 'Kaydedildi!')
+                ->with('mesaj_tur', 'success');
+        }
+
+        return redirect()->route('kullanici.panel')
+            ->with('mesaj', 'Diyetisyen değilsin ki?')
+            ->with('mesaj_tur', 'danger');
+    }
 
 }

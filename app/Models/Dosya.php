@@ -24,6 +24,6 @@ class Dosya extends Model
     }
     public function mesaj()
     {
-        return $this->belongsTo('App\Models\Mesaj', 'id', 'dosya_id');
+        return $this->hasOne('App\Models\Mesaj', 'id', 'dosya_id');
     }
 }

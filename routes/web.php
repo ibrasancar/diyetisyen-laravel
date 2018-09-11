@@ -11,12 +11,7 @@
 |
 */
 
-
-
 Route::get('/', 'SayfaController@index')->name('anasayfa');
-
-
-
 
 Route::group(['prefix' => 'kullanici'], function (){
 
@@ -31,6 +26,10 @@ Route::group(['prefix' => 'kullanici'], function (){
         #Kullanıcı hesap ayarları route
         Route::get('/panel', 'KullaniciController@panel')->name('kullanici.panel');
         Route::post('/panel', 'KullaniciController@guncelle');
+
+        #Diyetisyen hesap ayarları route
+        Route::get('/panel/diyetisyen', 'KullaniciController@diyetisyen_panel')->name('kullanici.diyetisyen_panel');
+        Route::post('/panel/diyetisyen', 'KullaniciController@diyetisyen_guncelle');
 
         #Kullanıcı resim ayarı route
         Route::get('/avatar', 'KullaniciController@avatar')->name('kullanici.avatar');
@@ -54,16 +53,12 @@ Route::group(['prefix' => 'mesaj', 'middleware' => 'auth'], function () {
         Route::post('/sil', 'MesajController@sil')->name('mesaj.sil');
 });
 
+Route::group(['prefix' => 'diyetisyen', 'middleware' => 'auth'], function (){
 
-
-Route::group(['middleware' => 'auth'], function (){
-
-    Route::group(['prefix' => 'diyetisyen'], function () {
-        Route::match(['get', 'post'], '/', 'DiyetisyenController@index')->name('diyetisyen');
-        Route::get('/{kullanici_adi}', 'DiyetisyenController@incele')->name('diyetisyen.incele');
-        Route::get('/{kullanici_adi}/yorum', 'YorumController@yorum_sayfa')->name('diyetisyen.yorum_sayfa');
-        Route::post('/{kullanici_adi}/yorum', 'YorumController@yorum_yap');
-    });
+    Route::match(['get', 'post'], '/', 'DiyetisyenController@index')->name('diyetisyen');
+    Route::get('/{kullanici_adi}', 'DiyetisyenController@incele')->name('diyetisyen.incele');
+    Route::get('/{kullanici_adi}/yorum', 'YorumController@yorum_sayfa')->name('diyetisyen.yorum_sayfa');
+    Route::post('/{kullanici_adi}/yorum', 'YorumController@yorum_yap');
 
 });
 

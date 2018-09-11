@@ -2,26 +2,16 @@
 @section('title', 'Avatar Yükle - Diyetisyen Portalı')
 
 @section('content')
-    <!-- Home -->
-    <div class="home">
-        <div class="home_background_container prlx_parent">
-            <div class="home_background prlx" style="background-image:url(/images/teachers_background.jpg)"></div>
-        </div>
-        <div class="home_content">
-            <h1>Panelim</h1>
-        </div>
-    </div>
-    <div class="teachers page_section">
-        <div class="container">
+        <div class="container mt-5">
             @include('layouts.partials.alert')
             @include('layouts.partials.errors')
             <div class="row">
-                @include('kullanici.hesap_ayarlari')
+                @include('kullanici.sol_panel')
                 <div class="col-lg-8">
-                    <div class="card">
+                    <div class="card border-primary">
                         <div class="card-body p-0">
                             <div class="card-header">
-                                <h2 style="color: #3f3f3f">Hesap Ayarları</h2>
+                                <h2>Avatar Ayarları</h2>
                             </div>
                             <div class="card-text p-3 pt-4">
                                 <form method="post" action="{{ route('kullanici.avatar') }}" style="width: 100%;" enctype="multipart/form-data">
@@ -35,7 +25,7 @@
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group text-right">
-                                                <button type="submit" class="btn btn-success">Yükle</button>
+                                                <button type="submit" class="btn btn-success">Yükle <i class="fas fa-upload list_icon_button"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -45,10 +35,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-    </div>
 @endsection
 
 @push('scripts')

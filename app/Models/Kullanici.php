@@ -62,4 +62,14 @@ class Kullanici extends Authenticatable
         return $this->hasMany('App\Models\Yorum', 'diyetisyen_id', 'id')->with('kullanici');
     }
 
+    public function diyetisyen_mi()
+    {
+        return $this->attributes['seviye'] == 1;
+    }
+
+    public function kullanici_mi()
+    {
+        return $this->attributes['seviye'] == 0;
+    }
+
 }

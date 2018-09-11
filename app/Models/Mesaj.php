@@ -25,6 +25,10 @@ class Mesaj extends Model
     {
         return $this->belongsTo('App\Models\Kullanici', 'gonderici_id', 'id');
     }
+    public function alici_bilgileri()
+    {
+        return $this->belongsTo('App\Models\Kullanici', 'alici_id', 'id');
+    }
 
     public function giden_mesaj()
     {
@@ -37,6 +41,6 @@ class Mesaj extends Model
 
     public function dosya()
     {
-        return $this->hasOne('App\Models\Dosya', 'dosya_id', 'id');
+        return $this->belongsTo('App\Models\Dosya', 'dosya_id', 'id');
     }
 }

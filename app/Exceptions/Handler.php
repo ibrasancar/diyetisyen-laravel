@@ -46,7 +46,23 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        /*return $request->expectsJson()
+            ? response()->json(['message' => $exception->getMessage()], 401)
+            : redirect()->guest(route('kullanici.giris'))
+                ->with('mesaj', 'Bu sayfaya erişebilmek için giriş yapmalısınız!')
+                ->with('mesaj_tur', 'danger');*/
+
         return parent::render($request, $exception);
+
+/*        return response()->json(
+            [
+                'errors' => [
+                    'status' => 401,
+                    'message' => 'Unauthenticated',
+                ]
+            ], 401
+        );
+*/
     }
 
 }
