@@ -17,7 +17,6 @@ class CreateYorumTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('kullanici_id');
             $table->unsignedInteger('diyetisyen_id');
-            $table->tinyInteger('puan');
             $table->text('yorum');
 
             $table->timestamp('gonderme_tarihi')->default(DB::raw('CURRENT_TIMESTAMP'));

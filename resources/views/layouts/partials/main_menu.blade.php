@@ -22,6 +22,9 @@
                         Mesajlar <span class="badge {{ $okunmamis_mesaj_sayisi > 0 ? 'badge-danger' : 'display_none' }}">{{ $okunmamis_mesaj_sayisi }}</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('kullanici.cikis') }}">Çıkış</a>
+                </li>
                 @if(auth()->user() != null && auth()->user()->seviye == 0)
                     <li class="nav-item {{ Request::is('mesaj*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('mesaj.alinanlar') }}">

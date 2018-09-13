@@ -30,10 +30,10 @@
                             <div class="col-md-6">
                                 <p class="pt-2">{{ $kullanici_yorumu->yorum }}</p>
                                 <span class="text-right pb-4">
-                                                    @for($i = 0; $i < $kullanici_yorumu->puan; $i++)
+                                    @for($i = 0; $i < $kullanici_yorumu->puan->puan; $i++)
                                         <i class="fa fa-star"></i>
                                     @endfor
-                                            </span>
+                                </span>
                             </div>
 
                         </div>
@@ -52,7 +52,7 @@
                         </div>
                         <p class="pt-2">{{ $item->yorum }}</p>
                         <span class="text-right pb-4">
-                                        @for($i = 0; $i < $item->puan; $i++)
+                            @for($i = 0; $i < $item->puan->puan; $i++)
                                 <i class="fa fa-star"></i>
                             @endfor
                                     </span>

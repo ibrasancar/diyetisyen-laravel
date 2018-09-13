@@ -6,6 +6,7 @@ use App\Models\Diyetisyen;
 use App\Models\DiyetisyenTip;
 use App\Models\Kullanici;
 use App\Models\Mesaj;
+use App\Models\Puan;
 use App\Models\Yorum;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -80,10 +81,11 @@ class DiyetisyenController extends Controller
             ->where('kullanici_adi', $kullanici_adi)->firstOrFail();
 
         $alinan_yorumlar = Yorum::where('diyetisyen_id', $kullanici->id)
+            ->with('puan')
             ->orderByDesc('gonderme_tarihi')
             ->paginate(6);
 
-        $kullanici_yorumu = Yorum::where('kullanici_id', auth()->user()->id)->where('diyetisyen_id', $kullanici->id)->first();
+        $kullanici_yorumu = Yorum::where('kullanici_id', auth()->user()->id)->where('diyetisyen_id', $kullanici->id)->with('puan')->first();
         return view('diyetisyen.incele.index', compact('kullanici', 'alinan_yorumlar', 'kullanici_yorumu'));
     }
 }

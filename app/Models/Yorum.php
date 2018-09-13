@@ -17,11 +17,16 @@ class Yorum extends Model
     protected $guarded = [];
 
     protected $fillable = [
-        'kullanici_id', 'diyetisyen_id', 'puan', 'yorum'
+        'kullanici_id', 'diyetisyen_id', 'yorum'
     ];
 
     public function kullanici()
     {
         return $this->belongsTo('App\Models\Kullanici', 'kullanici_id', 'id');
+    }
+
+    public function puan()
+    {
+        return $this->hasOne('App\Models\Puan', 'kullanici_id', 'kullanici_id');
     }
 }

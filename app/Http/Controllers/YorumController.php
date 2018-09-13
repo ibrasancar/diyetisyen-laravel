@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Diyetisyen;
 use App\Models\Kullanici;
 use App\Models\Mesaj;
+use App\Models\Puan;
 use App\Models\Yorum;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -34,7 +36,7 @@ class YorumController extends Controller
     }
 
     public function yorum_yap($kullanici_adi){
-        $kullanici = Kullanici::where('kullanici_adi', $kullanici_adi)->first();
+        $kullanici = Kullanici::where('kullanici_adi', $kullanici_adi)->with('diyetisyen')->first();
         $yorum_yapan = auth()->user();
 
         if($yorum_yapan->seviye >= 1){
@@ -60,8 +62,34 @@ class YorumController extends Controller
         Yorum::create([
             'kullanici_id'      => $yorum_yapan->id,
             'diyetisyen_id'     => $kullanici->id,
-            'puan'              => \request('puan'),
             'yorum'             => \request('yorum')
+        ]);
+
+        #yorum puanı güncelleme
+        $toplam_yorum = Puan::where('diyetisyen_id', $kullanici->id)->get();
+        $verilen_puan = \request('puan');
+        if(is_null($toplam_yorum))
+        {
+            $kullanici->diyetisyen()->update(['puan' => $verilen_puan]);
+        }
+        else
+        {
+            #puan hesaplaması
+            $toplam_puan = 0.0;
+            foreach ($toplam_yorum as $item)
+            {
+                $toplam_puan += $item->puan;
+            }
+            $toplam_yorum_sayisi = (float)count($toplam_yorum) + 1;
+            $puan_guncelle = ($toplam_puan + $verilen_puan) / $toplam_yorum_sayisi;
+            #puan güncelle
+            $kullanici->diyetisyen()->update(['puan' => $puan_guncelle]);
+        }
+
+        Puan::create([
+            'kullanici_id'      => $yorum_yapan->id,
+            'diyetisyen_id'     => $kullanici->id,
+            'puan'              => \request('puan')
         ]);
 
         return redirect()->route('diyetisyen.incele', $kullanici_adi)

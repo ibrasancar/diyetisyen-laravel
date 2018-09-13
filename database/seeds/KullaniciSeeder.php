@@ -17,7 +17,7 @@ class KullaniciSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
         Kullanici::truncate();
         Diyetisyen::truncate();
-        for($i=0; $i<20; $i++)
+        for($i=0; $i<40; $i++)
         {
             $kullanici = Kullanici::create([
                 "seviye" => 0,
@@ -32,14 +32,18 @@ class KullaniciSeeder extends Seeder
                 "tc_no"         => $faker->tcNo,
                 "dogum_tarihi"  => $faker->date($format = 'Y-m-d', $max = 'now'),
             ]);
-
-            $kullanici->diyetisyen()->create([
+        }
+        for($i=1; $i<=20; $i++)
+        {
+            $diyetisyen = Diyetisyen::create([
+                "kullanici_id"    =>  $i,
                 "tip"   =>  rand(1,7),
                 "puan"  => null,
                 "ozgecmis"  => $faker->sentence(160),
                 "aciklama"  => $faker->sentence(20)
             ]);
         }
+
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
     }
 }
