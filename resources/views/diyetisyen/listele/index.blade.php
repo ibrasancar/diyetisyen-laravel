@@ -37,6 +37,9 @@
                                         <i class="fas fa-info-circle list_icon"></i>
                                         <strong>Puan:</strong>
                                         <span class="badge badge-info">
+                                            @if($diyetisyen->puan == null || $diyetisyen->puan == 0)
+                                                <i class="fas fa-frown fa-2x" style="color: #fff;"></i>
+                                            @endif
                                             @for($i = 1; $i <= $diyetisyen->puan; $i++)
                                                 <i class="fas fa-star" style="color: #fff;"></i>
                                             @endfor
