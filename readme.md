@@ -1,5 +1,5 @@
 
-# Diyetisyen Portalı Uygulaması
+# Diyetisyen Portalı Uygulaması (v0.1)
 Diyetisyen ve diyetisyen müşterilerinin etkileşimini arttırmak için hazırlanmış bir portal.
 
 ## Anasayfa arayüzü
