@@ -4,9 +4,14 @@
 @section('content')
     <div class="container mt-5">
         <div class="row">
-            @include('layouts.partials.alert')
-            @include('layouts.partials.errors')
 
+            @if(isset($mesaj))
+                <div class="container">
+                    <div class="alert alert-{{ $mesaj_tur }}">
+                        {{ $mesaj }}
+                    </div>
+                </div>
+            @endif
             <div class="col-md-12">
                 <h2 class="h2">
                     Diyetisyen Kaydı

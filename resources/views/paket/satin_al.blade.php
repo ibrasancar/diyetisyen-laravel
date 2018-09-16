@@ -6,7 +6,6 @@
         <div class="row">
             @include('layouts.partials.alert')
             @include('layouts.partials.errors')
-
             <div class="col-md-12">
                 <h2 class="h2">
                     Seçtiğiniz Paket: <span class="badge badge-primary">{{ $paket->tanim }} - {{ $paket->ucret }} ₺</span>
@@ -17,38 +16,36 @@
                 <hr class="my-4"/>
             </div>
 
-            <form action="" style="width: 100%">
+                {{--<div class="col-md-12">--}}
+                    {{--<div class="card">--}}
+                        {{--<div class="card-body">--}}
+                            {{--<div class="row">--}}
+                                {{--<div class="col-md-12">--}}
+                                    {{--<h4>Diyetisyen Bilgileri</h4>--}}
+                                    {{--<hr class="my-4"/>--}}
+                                {{--</div>--}}
+                                {{--<div class="col-md-6">--}}
 
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h4>Diyetisyen Bilgileri</h4>
-                                    <hr class="my-4"/>
-                                </div>
-                                <div class="col-md-6">
+                                    {{--<textarea name="" id="" rows="3" class="form-control" placeholder="Bize kısaca kendinizden bahsedin."></textarea>--}}
 
-                                    <textarea name="" id="" rows="3" class="form-control" placeholder="Bize kısaca kendinizden bahsedin."></textarea>
+                                    {{--<label for="diyetisyen_tip" class="mt-2">Hizmet verdiğiniz diyetisyenlik dalı:</label>--}}
+                                    {{--<select name="" id="" class="form-control">--}}
+                                        {{--@foreach($diyetisyeni_tipleri as $item)--}}
+                                            {{--<option value="{{ $item->tip }}">{{ $item->tanim }}</option>--}}
+                                        {{--@endforeach--}}
+                                    {{--</select>--}}
 
-                                    <label for="diyetisyen_tip" class="mt-2">Hizmet verdiğiniz diyetisyenlik dalı:</label>
-                                    <select name="" id="" class="form-control">
-                                        @foreach($diyetisyeni_tipleri as $item)
-                                            <option value="{{ $item->tip }}">{{ $item->tanim }}</option>
-                                        @endforeach
-                                    </select>
+                                    {{--<label for="ozgecmis" class="mt-2">Özgeçmiş</label>--}}
+                                    {{--<input type="file" class="form-control">--}}
+                                {{--</div>--}}
 
-                                    <label for="ozgecmis" class="mt-2">Özgeçmiş</label>
-                                    <input type="file" class="form-control">
-                                </div>
-
-                                <div class="col-md-6">
-                                    <textarea name="" id="" cols="30" rows="10" class="form-control" placeholder="Müşterilerinize neler vadediyorsunuz?"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                {{--<div class="col-md-6">--}}
+                                    {{--<textarea name="" id="" cols="30" rows="10" class="form-control" placeholder="Müşterilerinize neler vadediyorsunuz?"></textarea>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
 
                 <div class="col-md-12 mt-4">
                     <div class="card">
@@ -57,39 +54,10 @@
                                 <div class="col-md-6">
                                     <h4><i class="far fa-credit-card"></i> Ödeme Bilgileri</h4>
                                     <hr class="my-4"/>
-                                    <div class="input-group">
-                                        <input type="text" id="ad_soyad" name="ad_soyad" class="form-control mb-3" placeholder="Kart Üzerindeki İsim" value="{{ $kullanici->ad_soyad }}">
-                                    </div>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="far fa-credit-card"></i></span>
-                                        </div>
-                                        <input type="text" class="form-control" id="kredi_karti" name="kredi_karti">
-                                    </div>
 
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" id="cvc" name="cvc">
-                                            </div>
+                                        <div id="iyzipay-checkout-form" class="responsive">
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" id="skt" name="skt">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <button type="submit" class="btn btn-success btn-lg" style="width: 100%">
-                                                {{ $paket->ucret }}₺ Öde <i class="fas fa-angle-double-right"></i>
-                                            </button>
-                                        </div>
-                                    </div>
+
                                 </div>
 
                                 <div class="col-md-6">
@@ -106,8 +74,6 @@
                         </div>
                     </div>
                 </div>
-            </form>
-
 
 
 
@@ -125,4 +91,6 @@
         $('#cep_telefon').mask('+00 (000) 000-00-00', { placeholder: "(___) ___-__-__" });
         $('#tc_no').mask('00000000000', { placeholder: "___________" });
     </script>
+    {!! $checkoutFormInitialize->getCheckoutFormContent() !!}
+
 @endpush

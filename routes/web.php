@@ -37,6 +37,7 @@ Route::group(['prefix' => 'kullanici'], function (){
 
         Route::get('/paket', 'PaketController@diyetisyen_kayit')->name('kullanici.diyetisyen.kayit');
         Route::get('/paket/{paket_id}', 'PaketController@satin_al')->name('paket.satin_al');
+        Route::post('/paket/odeme_sonucu', 'PaketController@odeme_sonucu')->name('paket.odeme_sonucu');
 
 });
 
