@@ -13,3 +13,9 @@ Diyetisyen ve diyetisyen müşterilerinin etkileşimini arttırmak için hazırl
 
 ## Mesaj Arayüzü
 ![](/screenshots/5.png)
+
+## Paketler Arayüzü
+![](/screenshots/6.png)
+
+## Ödeme Arayüzü
+![](/screenshots/7.png)
