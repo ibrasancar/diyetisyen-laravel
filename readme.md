@@ -18,4 +18,4 @@ Diyetisyen ve diyetisyen müşterilerinin etkileşimini arttırmak için hazırl
 ![](/screenshots/6.png)
 
 ## Ödeme Arayüzü
-![](/screenshots/7.png)
+![](/screenshots/9.png)
