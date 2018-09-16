@@ -35,6 +35,9 @@ Route::group(['prefix' => 'kullanici'], function (){
         Route::get('/avatar', 'KullaniciController@avatar')->name('kullanici.avatar');
         Route::post('/avatar', 'KullaniciController@avatar_guncelle');
 
+        Route::get('/paket', 'PaketController@diyetisyen_kayit')->name('kullanici.diyetisyen.kayit');
+        Route::get('/paket/{paket_id}', 'PaketController@satin_al')->name('paket.satin_al');
+
 });
 
 Route::group(['prefix' => 'mesaj', 'middleware' => 'auth'], function () {

@@ -14,7 +14,7 @@ class SosyalMedyaSeeder extends Seeder
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
         SosyalMedya::truncate();
-        for ($i=1; $i<41; $i++)
+        for ($i=1; $i<=61; $i++)
         {
             SosyalMedya::create([
                "kullanici_id"   =>  $i,

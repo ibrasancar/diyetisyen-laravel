@@ -7,6 +7,7 @@ use App\Models\DiyetisyenTip;
 use App\Models\Dosya;
 use App\Models\Kullanici;
 use App\Models\Mesaj;
+use App\Models\Paket;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

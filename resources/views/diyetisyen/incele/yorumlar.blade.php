@@ -30,9 +30,12 @@
                             <div class="col-md-6">
                                 <p class="pt-2">{{ $kullanici_yorumu->yorum }}</p>
                                 <span class="text-right pb-4">
-                                    @for($i = 0; $i < $kullanici_yorumu->puan->puan; $i++)
-                                        <i class="fa fa-star"></i>
+                                    @for($i = 0; $i <= $kullanici_yorumu->puan->puan; $i++)
+                                        <i class="fas fa-star"></i>
                                     @endfor
+                                    @if($kullanici_yorumu->puan->puan - floor($kullanici_yorumu->puan->puan) > 0.0 && $item->puan->puan < 5)
+                                        <i class="fas fa-star-half"></i>
+                                    @endif
                                 </span>
                             </div>
 
@@ -52,9 +55,12 @@
                         </div>
                         <p class="pt-2">{{ $item->yorum }}</p>
                         <span class="text-right pb-4">
-                            @for($i = 0; $i < $item->puan->puan; $i++)
-                                <i class="fa fa-star"></i>
+                            @for($i = 0; $i <= $item->puan->puan; $i++)
+                                <i class="fas fa-star"></i>
                             @endfor
+                            @if($item->puan->puan - floor($item->puan->puan) > 0.0 && $item->puan->puan < 5)
+                                <i class="fas fa-star-half"></i>
+                            @endif
                                     </span>
                         @if($loop->last != true)
                             <hr/>

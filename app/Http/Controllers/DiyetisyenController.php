@@ -36,7 +36,13 @@ class DiyetisyenController extends Controller
             request()->flash();
             $ara = request('ara');
             $diyetisyen_tip = request('diyetisyen_tip');
-            $sirala = \request('sirala');
+
+            #farklı sayfalardan gelen arama isteği için yapıldı
+            if ($sirala != 'puan')
+            {
+                $sirala = \request('sirala');
+            }
+
             $diyetisyenler = Diyetisyen::with('kullanici')
                 ->with('kullanici.sosyal_medya')
                 ->with('kullanici.resim')

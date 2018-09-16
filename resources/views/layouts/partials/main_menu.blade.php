@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">{{ config('app.name') }}</a>
+    <a class="navbar-brand" href="{{ route('anasayfa') }}">{{ config('app.name') }}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -26,9 +26,9 @@
                     <a class="nav-link" href="{{ route('kullanici.cikis') }}">Çıkış</a>
                 </li>
                 @if(auth()->user() != null && auth()->user()->seviye == 0)
-                    <li class="nav-item {{ Request::is('mesaj*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('mesaj.alinanlar') }}">
-                            Diyetisyen Kaydı
+                    <li class="nav-item {{ Request::is('kullanici/paket*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('kullanici.diyetisyen.kayit') }}">
+                            <span>Diyetisyen Kaydı</span>
                         </a>
                     </li>
                 @endif
@@ -42,11 +42,11 @@
                 </li>
             @endguest
         </ul>
-        {{-- Arama formu --}}
-        {{--<form class="form-inline my-2 my-lg-0">--}}
-            {{--<input class="form-control mr-sm-2" type="text" placeholder="Search">--}}
-            {{--<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>--}}
-        {{--</form>--}}
+        <form class="form-inline my-2 my-lg-0" action="{{ route('diyetisyen') }}" method="POST">
+                {{ csrf_field() }}
+                <input class="form-control mr-sm-2" type="text" id="ara" name="ara" placeholder="Diyetisyen ara..." value="{{ old('ara') }}">
+                <button class="btn btn-dark my-2 my-sm-0" type="submit">Ara</button>
+        </form>
     </div>
 </nav>
 

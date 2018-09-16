@@ -22,11 +22,13 @@ class MesajSeeder extends Seeder
                 'onceki_mesaj_id'   =>  rand(0,1) == 0 ? rand(1, 100) : 0,
                 'gonderici_id'      =>  $diyetisyen_mi == 0 ? rand(1, 20) : rand(21, 40),
                 'alici_id'          =>  $diyetisyen_mi == 0 ? rand(21, 40) : rand(1,20),
-                'baslik'            =>  $faker->sentence(24),
+                'baslik'            =>  $faker->sentence(12),
                 'mesaj'             =>  $faker->sentence(250),
                 'gonderme_tarihi'   =>  $faker->dateTime($max = 'now'),
                 'okunma_tarihi'     =>  $okundu_mu == 0 ? null : $faker->dateTime($max = 'now')
             ]);
         }
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
     }
 }

@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
 //        $this->call(SosyalMedyaSeeder::class);
 //        $this->call(DosyaSeeder::class);
 //        $this->call(MesajSeeder::class);
+        $this->call(PaketSeeder::class);
 
     }
 }
